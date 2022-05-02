@@ -29,7 +29,7 @@ Contiene los siguientes docuemtos (archivos de texto): los certificados de cada 
 
 Aquí hablar de Heroku.
 
-La base de datos consiste de 3 tablas:
+La base de datos consiste de 3 tablas:      
 
 a) Tabla de usuarios y contraseñas (Users).
 
@@ -127,7 +127,7 @@ Crea un nuevo usuario y llama a las funciones correspondientes (agregarClavePubl
 
 ### generarCertificado(*usuario, ruta, psw*)
 
-Esta función genera la clave privada utilizando el algoritmo de firmado ed25519, después se encripta la clave privada con la contraseña otorgada y por último se crea un archivo con dicha encripción, en este caso le llamaremos certificado. El certificado se guardará en la ruta otorgada de la forma "Certificado_usuario" como un archivo de texto. 
+Esta función genera la clave privada utilizando el algoritmo de firmado ed25519, después se encripta la clave privada con la contraseña otorgada y por último se crea un archivo con dicha encripción, en este caso le llamaremos certificado. El certificado se guardará en la ruta otorgada de la forma "Certificado_usuario" como un archivo .pem. 
 
 **Parámetros:** 
 - ***usuario:*** *str*, correo de la persona que se registra. 
