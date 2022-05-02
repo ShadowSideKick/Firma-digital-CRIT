@@ -169,21 +169,20 @@ Utilizada para registrar a un usuario o administrador. En primer lugar se leen l
 **Parámetros:** 
 - ***ruta_df:*** *str*, directorio del csv con los datos de los usuarios o de los administradores.
 - ***ruta_carpeta:*** *str*, directorio de la carpeta donde se desea almacenar el certificado del registro.
-- ***tipo:*** *str*, tipo de registro, 1 para usuarios regulares y 0 para administradores.
+- ***tipo*** *bool*, indica si el usuario es un usuario regular o administrador (0: admin, 1: usuario regular).
 - ***datos_reg:*** *lst*, lista de datos necesarios necesarios para generar un registro (correo, nombre, puesto y contraseña).
               
 
-### verifica (*ruta, ruta_firma, ruta_df, ruta_dfadmn*)
+### verifica (*ruta, ruta_firma*)
 
-Hashea el documento a verificar, lee el archivo con la firma y extrae por cada firmado la firma, la clave pública del firmador y la fecha del firmado. Teniendo la clave pública, se revisa si la firma es válida y con el hash de la clave pública verifica que existe un usuario en la base de datos que tenga esa clave pública. Si esto es correcto, la función imprime el nombre del usuario firmador y la fecha de firmado junto con el hecho de que la firma es válida. Por otro lado, hay dos maneras por las cuales la función regresaría que la firma es inválida:
-- Que la firma no sea válida si es que quieres verificar con un documento donde no esté esa firma.
+Hashea el documento a verificar, lee el archivo con la firma, separa las diferentes firmas (en caso de haber más de una) y separa la firma, la clave pública del firmador y la fecha del firmado. Teniendo la clave pública, se revisa si la firma es válida y con el hash de la clave pública verifica que existe un usuario en la base de datos que tenga esa clave pública. Si esto es correcto, la función imprime el nombre del usuario firmador y la fecha de firmado junto con el hecho de que la firma es válida. Por otro lado, hay tres maneras por las cuales la función regresaría que la firma es inválida:
+- Que la firma no sea válida dado que se modificó el documento o no se firmó correctamente.
 - Que no exista ningún usuario con esa clave pública en el dataframe.
+- Que la firma del usuario haya sido desactivada en la base de datos.
 
 **Parámetros:** 
 - ***ruta:*** *str*, dirección de donde se encuentra el documento a verificar.
 - ***ruta_firma:*** *str*, ruta donde se encuentra el archivo con la firma
-- ***ruta_df:*** *str*, ruta donde se encuentra la base de datos de los usuarios
-- ***ruta_dfadmn*** *str*, ruta donde se encuentra la base de datos de los administradores.
                 
 **Returns:** ***ln:*** *lst*, lista de nombres y fechas de las firmas válidas.
 
@@ -197,7 +196,7 @@ Regresa True si todos los elementos en una lista son iguales. False en caso cont
 
 ### unificarFirmas (*rutas*)
 
-Une las firmas de varios usuarios de un solo documento en un archivo. Para ello la función revisa si las firmas corresponden a un mismo documento, si sí regresa True, False en caso contrario. La información de los usuarios firmadores está separada por tres intros. El nombre del archivo resultante tiene la forma "nombre_del_documento_firmas_unificadas".
+Une las firmas de varios usuarios de un solo documento en un archivo. La información de los usuarios firmadores está separada por tres intros. El nombre del archivo resultante tiene la forma "nombre_del_documento_firmas_unificadas".
 
 **Parámetros:** 
 - ***rutas:*** *str*, rutas de los archivos de firma que se desean unificar, deben estar separados por "\n".
@@ -213,11 +212,38 @@ Desencripta la clave privada del certificado con la contraseña original para vo
 - ***psw:*** *str*, contraseña original.
 - ***psw_new:*** *str*, contraseña nueva.
 
-### borrar (*ruta_df, ruta_certificado, id_borrar*)
-Esta función fue generada con el fin de que un administrador pueda eliminar a algún usuario. Borrar consiste en eliminar su certificado y en cambiar el valor de la columna "Vigente" de la base de datos de usuarios a 0, en lugar de 1, y también elimina el identificador del usuario para que sea posible volverse a registrar si se necesitara.
+### borrar (*email, tipo*)
+Esta función fue generada con el fin de que un administrador pueda eliminar a algún usuario. Borrar consiste en invalidar su certificado y en cambiar el valor de la columna "Vigente" de la base de datos de usuarios a 0, en lugar de 1.
 
 **Parámetros:** 
-- ***ruta_df:*** *str*, directorio de la base de datos que contiene a los usuarios.
-- ***ruta_certificado:*** str, directorio del certificado del usuario a borrar.
-- ***id_borrar:*** str, identificador del usuario a eliminar.
+- ***email*** *str*,  correo de la persona registrada. 
+- ***tipo*** *bool*, indica si el usuario es un usuario regular o administrador (0: admin, 1: usuario regular).
 
+
+### cambiarContraseña(*ruta_certificado, psw, psw_new, email*)
+Permite a un usuario cambiar su contraseña ingresando su contraseña actual y actualiza la base de datos. Además, desencripta el certificado con la contraseña pasada y lo vuelve a encriptar con la nueva contraseña.
+
+**Parámetros:** 
+- ***ruta_certificado***  *str*,  directorio donde se encuentra el certificado. 
+- ***psw*** *str*, contraseña actual.
+- ***psw_new*** *str*, contraseña nueva.
+- ***email*** *str*,  correo de la persona registrada. 
+
+### Admin_cambiarContraseña(*email, psw_new*)
+Permite a un administrador cambiar la contraseña de algún usuario proporcionando su correo sin necesidad de ingresar la contraseña pasada. Es necesario que el usuario cree un nuevo certificado una vez que un administrador cambia su contraseña.
+
+**Parámetros:** 
+- ***email*** *str*,  correo de la persona que desea cambiar su contraseña. 
+- ***psw_new*** *str*, contraseña nueva.
+
+### validar(*email*)
+Función que permite a un administrador cambiar un usuario a válido.
+
+**Parámetros:** 
+- ***email*** *str*,  correo de la persona a validar. 
+
+### obtenerNoValidos()
+Función que devuelve a un administrador los usuarios no válidos con el fin de verificarlos y validarlos.
+
+### verificarVigencia()
+Función que verifica que los usuario no tenga más de un año con un mismo certificado. De lo contrario, invalida sus certificado en la base de datos.
