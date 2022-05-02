@@ -68,25 +68,72 @@ c) Tabla de usuarios y claves públicas (Public_keys_admins).
 
 ¿Qué se necesita para correrla?
 
-## **Librerías para el firmado**
+## **Librerías utilizadas**
 
 ### cryptography.hazmat.primitives
 Esta librería incluye interfaces de alto y bajo nivel para los algoritmos criptográficos más comunes como cifrados simétricos, resúmenes de mensajes y funciones de derivación de claves. Contiene un módulo de "Hazardous Materials" que incluye en la rama de Primitives algoritmos criptográficos de bajo nivel que son utilizados frecuentemente para crear protocolos criptográficos para sistemas de seguridad informática.
 ### hashlib
 Esta librería permite implementar una interfaz común para acceder a diferentes algoritmos criptográficos de hash. Los algoritmos de hash que incluye son FIPS SHA1, SHA224, SHA256, SHA384, SHA512 y MD5 de RSA. 
+### datetime
+Librería que permite manejar datos de fechas y fechas con hora.
+### os
+Librería que proporciona una forma portátil de usar funcionalidades dependientes del sistema operativo.
+### pandas
+Librería utilizada para el análisis y manejo de estructuras de datos.
+### sqlalchemy
+Librería que facilita la comunicación entre Python y bases de datos.
+### tkinter
+Librería para crear aplicaciones con interfaz de usuario.
+### glob
+Librería que encuentra todos los nombres de rutas que se asemejan a un patrón especificado de acuerdo a las reglas que se siguen en una terminal de UNIX.
+
 
 ## **Funciones del código**
+
+### agregarUsuario(*email, psw, user_type, curp, name*)
+Esta función agrega un nuevo usuario a la base de datos.
+
+**Parámetros:**
+- ***email*** *str*,  correo de la persona registrada. 
+- ***psw*** *str*, contraseña del usuario.
+- ***user_type*** *bool*, indica si el usuario es un usuario regular o administrador (0: admin, 1: usuario regular).
+- ***curp*** *str*, Clave Única de Registro de Población del usuario.
+
+### agregarClavePublica(*email, name, public_key, position*)
+Agrega la clave pública de un usuario a la base de datos.
+- ***email*** *str*,  correo de la persona registrada. 
+- ***name*** *str*, nombre del usuario.
+- ***public_key*** *str*, clave pública con la que se registrará el usuario en la base de datos.
+- ***position*** *str*, puesto del usuario dentro de la empresa.
+
+### agregarClavePublicaAdmin(*email, name, public_key, position*)
+Agrega la clave pública de un administrador a la base de datos.
+- ***email*** *str*,  correo de la persona registrada. 
+- ***name*** *str*, nombre del usuario.
+- ***public_key*** *str*, clave pública con la que se registrará el usuario en la base de datos.
+- ***position*** *str*, puesto del usuario dentro de la empresa.
+
+### registro(*ruta_carpeta, tipo, datos_reg*)
+Crea un nuevo usuario y llama a las funciones correspondientes (agregarClavePublica, agregarClavePublicaAdmin) para agregarlos a la base de datos.
 
 ### generarCertificado(*usuario, ruta, psw*)
 
 Esta función genera la clave privada utilizando el algoritmo de firmado ed25519, después se encripta la clave privada con la contraseña otorgada y por último se crea un archivo con dicha encripción, en este caso le llamaremos certificado. El certificado se guardará en la ruta otorgada de la forma "Certificado_usuario" como un archivo de texto. 
 
 **Parámetros:** 
-- ***usuario:*** *str*, la persona que se registra. 
+- ***usuario:*** *str*, correo de la persona que se registra. 
 - ***ruta:*** *str*, directorio de donde se registrará el certificado.
 - ***psw:*** *str*, contraseña del usuario.
-                
 
+### generarNuevoCertificado(*ruta_carpeta, tipo, email, psw*)
+Esta función permite a un usuario existente generar un nuevo certificado de firma.
+
+**Parámetros:**
+- ***ruta_carpeta*** *str*, directorio de donde se registrará el certificado.
+- ***tipo*** *bool*, indica si el usuario es un usuario regular o administrador (0: admin, 1: usuario regular).
+- ***email*** *str*,  correo de la persona registrada. 
+- ***psw*** *str*, contraseña del usuario.
+                
 ### cargarPrivateKey(*ruta, psw*)
 Esta función primeramente abre y lee el archivo que contiene el certificado, posteriormente desencripta la clave privada con ayuda de la contraseña y finalmente devuelve la clave privada.
 
