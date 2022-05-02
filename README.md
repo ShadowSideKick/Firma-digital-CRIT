@@ -25,7 +25,7 @@ Mantiene el registro de usuarios en el sistema.
 | user_type         | BOOL      | True para usuario regular y False para usuario administrador. |
 | created_on        | TIMESTAMP | Fecha de registro del usuario.                        |
 | curp              | VARCHAR   | CURP del usuario.                                     |
-| valid             | BOOL      | Indica si el usuario es vigente o no.                 |
+| valid             | BOOL      | Indica si el usuario es válido o no.                 |
 | name              | VARCHAR   | Nombre del usuario.                                   |
 | deactivation_date | TIMESTAMP | Fecha de dada de baja del usuario del sistema.        |
 
@@ -106,6 +106,11 @@ Agrega la clave pública de un administrador a la base de datos.
 
 ### registro(*ruta_carpeta, tipo, datos_reg*)
 Crea un nuevo usuario y llama a las funciones correspondientes (agregarClavePublica, agregarClavePublicaAdmin) para agregarlos a la base de datos.
+
+**Parámetros:** 
+- ***ruta_carpeta:*** *str*, directorio de la carpeta donde se desea almacenar el certificado del registro.
+- ***tipo*** *bool*, indica si el usuario es un usuario regular o administrador (0: admin, 1: usuario regular).
+- ***datos_reg:*** *lst*, lista de datos necesarios necesarios para generar un registro (correo, nombre, puesto y contraseña).
 
 ### generarCertificado(*usuario, ruta, psw*)
 
@@ -244,6 +249,8 @@ Función que permite a un administrador cambiar un usuario a válido.
 
 ### obtenerNoValidos()
 Función que devuelve a un administrador los usuarios no válidos con el fin de verificarlos y validarlos.
+
+**Returns:** *Dataframe* , usuarios no válidos. 
 
 ### verificarVigencia()
 Función que verifica que los usuario no tenga más de un año con un mismo certificado. De lo contrario, invalida sus certificado en la base de datos.
