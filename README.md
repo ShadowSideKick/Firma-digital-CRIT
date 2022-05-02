@@ -33,6 +33,20 @@ La base de datos consiste de 3 tablas:
 
 a) Tabla de usuarios y contraseñas.
 
+Mantiene el registro de usuarios en el sistema.
+
+| Columna           | Tipo      | Descripción                                           |
+|-------------------|-----------|-------------------------------------------------------|
+| user_id           | SERIAL    | Identificador del usuario en la tabla.                |
+| email             | VARCHAR   | Correo del usuario.                                   |
+| password          | VARCHAR   | Hash de la contraseña.                                |
+| user_type         | BOOL      | True para usuario regular y False para Administrador. |
+| created_on        | TIMESTAMP | Fecha de registro del usuario.                        |
+| curp              | VARCHAR   | CURP del usuario.                                     |
+| valid             | BOOL      | Indica si el usuario es vigente o no.                 |
+| name              | VARCHAR   | Nombre del usuario.                                   |
+| deactivation_date | TIMESTAMP | Fecha de dada de baja del usuario del sistema.        |
+
 b) Tabla de administradores y claves públicas.
 
 c) Tabla de usuarios y claves públicas.
