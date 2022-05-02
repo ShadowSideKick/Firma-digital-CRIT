@@ -38,31 +38,40 @@ Mantiene el registro de usuarios en el sistema.
 | Columna           | Tipo      | Descripción                                           |
 |-------------------|-----------|-------------------------------------------------------|
 | user_id           | SERIAL    | Identificador del usuario en la tabla.                |
-| email             | VARCHAR   | Correo del usuario.                                   |
+| email             | VARCHAR UNIQUE   | Correo del usuario.                                   |
 | password          | VARCHAR   | Hash de la contraseña.                                |
-| user_type         | BOOL      | True para usuario regular y False para Administrador. |
+| user_type         | BOOL      | True para usuario regular y False para usuario administrador. |
 | created_on        | TIMESTAMP | Fecha de registro del usuario.                        |
 | curp              | VARCHAR   | CURP del usuario.                                     |
 | valid             | BOOL      | Indica si el usuario es vigente o no.                 |
 | name              | VARCHAR   | Nombre del usuario.                                   |
 | deactivation_date | TIMESTAMP | Fecha de dada de baja del usuario del sistema.        |
 
-b) Tabla de administradores y claves públicas (Public_keys).
-
+b) Tabla de usuarios y claves públicas (Public_keys_admins).
 
 | Columna           | Tipo      | Descripción                                                |
 |-------------------|-----------|------------------------------------------------------------|
-| key_id_admin      | SERIAL    | Identificador del administrador en la tabla.               |
+| key_id            | SERIAL    | Identificador de la clave pública del usuario regular en la tabla. |
+| email             | VARCHAR   | Correo del usuario regular.                                        |
+| name              | VARCHAR   | Nombre del usuario regular.                                        |
+| public_key        | VARCHAR   | Hash de la clave pública.                                  |
+| position          | VARCHAR   | Puesto en la organización.                                 |
+| active            | BOOL      | True si la clave pública es vigente, False caso contrario. |
+| created_on        | TIMESTAMP | Fecha de registro de la clave.                             |
+| deactivation_date | TIMESTAMP | Fecha de dada de baja de la clave del sistema.             |
+
+c) Tabla de administradores y claves públicas (Public_keys).
+
+| Columna           | Tipo      | Descripción                                                |
+|-------------------|-----------|------------------------------------------------------------|
+| key_id_admin      | SERIAL    | Identificador de clave públia del usuario administrador en la tabla.               |
 | email             | VARCHAR   | Correo del administrador.                                  |
 | name              | VARCHAR   | Nombre del administrador.                                  |
 | public_key        | VARCHAR   | Hash de la clave pública.                                  |
 | position          | VARCHAR   | Puesto en la organización.                                 |
-| active            | BOOL      | True si es un administrador vigente, False caso contrario. |
-| created_on        | TIMESTAMP | Fecha de registro del administrador                        |
-| deactivation_date | TIMESTAMP | Fecha de dada de baja del administrador del sistema.       |
-
-c) Tabla de usuarios y claves públicas (Public_keys_admins).
-
+| active            | BOOL      | True si es una clave pública vigente, False caso contrario. |
+| created_on        | TIMESTAMP | Fecha de registro de la clave                        |
+| deactivation_date | TIMESTAMP | Fecha de dada de baja de la clave del sistema.       |
 
 ## **La interfaz de usuario**
 
