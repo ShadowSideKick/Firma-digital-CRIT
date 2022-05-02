@@ -25,7 +25,24 @@ Contiene los certificados que se generan para las firmas de los administradores.
 ### *Carpeta "Pruebas firma"*
 Contiene los siguientes docuemtos (archivos de texto): los certificados de cada uno de los usuarios, los documentos que ya han sido firmados y las firmas unificadas
 
-## **Librerías**
+## **Las bases de datos**
+
+Aquí hablar de Heroku.
+
+La base de datos consiste de 3 tablas:
+
+a) Tabla de usuarios y contraseñas.
+
+b) Tabla de administradores y claves públicas.
+
+c) Tabla de usuarios y claves públicas.
+
+
+## **La interfaz de usuario**
+
+¿Qué se necesita para correrla?
+
+## **Librerías para el firmado**
 
 ### cryptography.hazmat.primitives
 Esta librería incluye interfaces de alto y bajo nivel para los algoritmos criptográficos más comunes como cifrados simétricos, resúmenes de mensajes y funciones de derivación de claves. Contiene un módulo de "Hazardous Materials" que incluye en la rama de Primitives algoritmos criptográficos de bajo nivel que son utilizados frecuentemente para crear protocolos criptográficos para sistemas de seguridad informática.
