@@ -31,7 +31,7 @@ Aquí hablar de Heroku.
 
 La base de datos consiste de 3 tablas:
 
-a) Tabla de usuarios y contraseñas.
+a) Tabla de usuarios y contraseñas (Users).
 
 Mantiene el registro de usuarios en el sistema.
 
@@ -47,9 +47,21 @@ Mantiene el registro de usuarios en el sistema.
 | name              | VARCHAR   | Nombre del usuario.                                   |
 | deactivation_date | TIMESTAMP | Fecha de dada de baja del usuario del sistema.        |
 
-b) Tabla de administradores y claves públicas.
+b) Tabla de administradores y claves públicas (Public_keys).
 
-c) Tabla de usuarios y claves públicas.
+
+| Columna           | Tipo      | Descripción                                                |
+|-------------------|-----------|------------------------------------------------------------|
+| key_id_admin      | SERIAL    | Identificador del administrador en la tabla.               |
+| email             | VARCHAR   | Correo del administrador.                                  |
+| name              | VARCHAR   | Nombre del administrador.                                  |
+| public_key        | VARCHAR   | Hash de la clave pública.                                  |
+| position          | VARCHAR   | Puesto en la organización.                                 |
+| active            | BOOL      | True si es un administrador vigente, False caso contrario. |
+| created_on        | TIMESTAMP | Fecha de registro del administrador                        |
+| deactivation_date | TIMESTAMP | Fecha de dada de baja del administrador del sistema.       |
+
+c) Tabla de usuarios y claves públicas (Public_keys_admins).
 
 
 ## **La interfaz de usuario**
