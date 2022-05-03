@@ -158,7 +158,7 @@ Utilizando la librería hashlib, se pasa la clave pública por la función *hash
 
 ### firmar(*rutas, ruta_certificado, psw*)
 
-Carga la clave privada del usuario, obtiene la clave pública derivada de ésta y la convierte en un objeto tipo bytes. Posteriormente haseha cada uno de los documentos que recibe y firma dichos hashes. Por cada documento se crea un archivo pem que contiene la firma, la clave pública del firmador en bytes, y la fecha de la acción, todo serparado por tres tabulaciones.
+Carga la clave privada del usuario, obtiene la clave pública derivada de ésta y la convierte en un objeto tipo bytes. Posteriormente hashea cada uno de los documentos que recibe y firma dichos hashes. Por cada documento, se crea un archivo pem que contiene la firma, la clave pública del firmador en bytes, y la fecha de la acción, todo serparado por tres tabulaciones.
 
 **Parámetros:** 
 
